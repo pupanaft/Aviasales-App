@@ -1,0 +1,15 @@
+html {
+    min-height: auto;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background-color: #F3F7FA;
+}
