@@ -1,8 +1,10 @@
+@use '../../var/var.scss';
+
 @font-face {
     font-family: "OpenSans-SemiBold";
     src:
         local("OpenSans-SemiBold"),
-        url("OpenSans-SemiBold.ttf") format("truetype");
+        url("../../fonts/OpenSans-SemiBold.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
 }
@@ -55,6 +57,39 @@ body {
     }
 }
 
+.loader {
+    max-width: 754px;
+    width: 100%;
+
+    &__element {
+        overflow: hidden;
+        height: 3px;
+        width: 100%;
+        background: var.$primary;
+
+        &::before {
+            content: '';
+            display: block;
+            background-color: var.$primary;
+            background-image: repeating-linear-gradient(135deg, hsla(0, 0%, 100%, 0.72), hsla(0, 0%, 100%, 0.72) 20px, var.$primary 0, var.$primary 40px);
+            height: 3px;
+            width: 0;
+            animation: getWidth 4s ease-in infinite;
+        }
+    }
+}
+
+@keyframes getWidth {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        width: 100%;
+        transform: translateX(-56px);
+    }
+}
+
 .filter-menu {
     display: flex;
     justify-content: space-between;
@@ -67,21 +102,21 @@ body {
     }
 
     &__get-button {
+        cursor: pointer;
         color: #FFF;
-        background-color: #2196F3;
+        background-color: var.$primary;
         border: none;
         width: 100%;
         height: 40px;
         border-radius: 4px 4px 4px 4px;
 
         &:active {
-            background-color: #339ff8;
+            background-color: #2584ff;
         }
     }
 
     &__wrapper {
         width: 502px;
-        // width: 100%;
     }
 
     &__tickets-list {

@@ -1,25 +1,35 @@
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
-import './tabs.scss'
 
-import { setTab } from '../../store/tabsSlice'
+import { setTab } from '../../store/checkboxSlice'
 
-const tabs = [{name:'САМЫЙ ДЕШЕВЫЙ', id:'tabs_1'},{name:'САМЫЙ БЫСТРЫЙ', id:'tabs_2'},{name:'ОПТИМАЛЬНЫЙ', id:'tabs_3'},]
+import classes from './tabs.module.scss'
 
-export default function Tabs(){
+const tabs = [
+  { name: 'САМЫЙ ДЕШЕВЫЙ', id: 'cheap' },
+  { name: 'САМЫЙ БЫСТРЫЙ', id: 'fast' },
+  { name: 'ОПТИМАЛЬНЫЙ', id: 'average' },
+]
+
+export default function Tabs() {
   const dispatch = useDispatch()
-  const activeTabs = useSelector(state=> state.tabs.activeTab)
- 
+  const activeTabs = useSelector((state) => state.checkbox.activeTab)
+
   return (
-    <ul className="filter-menu__tabs tabs">
-      {tabs.map((tab)=>{
+    <ul className={`${classes['filter-menu__tabs']} ${classes.tabs}`}>
+      {tabs.map((tab) => {
         const buttonClass = classNames({
-          'tabs__button':true,
-          'tabs__button--active':tab.id === activeTabs
+          [classes.tabs__button]: true,
+          [classes['tabs__button--active']]: tab.id === activeTabs,
         })
-        return(
-          <li className="tabs__item"><button key={tab.id} onClick={ () => dispatch(setTab({newActiveTab:tab.id}))} className={buttonClass} type='button' >{tab.name}</button></li>
-        )})}
+        return (
+          <li className={classes.tabs__item} key={tab.id}>
+            <button onClick={() => dispatch(setTab({ newActiveTab: tab.id }))} className={buttonClass} type="button">
+              {tab.name}
+            </button>
+          </li>
+        )
+      })}
     </ul>
   )
 }

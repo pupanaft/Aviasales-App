@@ -1,43 +1,17 @@
-import './ticket.scss'
+import TicketInfo from '../ticket-info'
 
-export default function Ticket(){
-  return(
-    <li className="tickets-list__ticket ticket">
-      <header className="ticket__header">
-        <div className="ticket__price">13000</div>
-        <div className="ticket__logo">13000</div>
+import classes from './ticket.module.scss'
+
+export default function Ticket({ item }) {
+  const ticketInfo = item.segments.map((info) => <TicketInfo info={info} key={`id-${info.date}`} />)
+
+  return (
+    <li className={`${classes['tickets-list__ticket']} ${classes.ticket}`}>
+      <header className={classes.ticket__header}>
+        <div className={classes.ticket__price}>{item.price}</div>
+        <img className={classes.ticket__logo} alt="logo" src={`http://pics.avs.io/99/36/${item.carrier}.svg`} />
       </header>
-      
-      <section className='ticket__body'>
-        <ul className="ticket__info ticket__info--to">
-          <li className="ticket__route">
-            <div className='ticket__thead'>MOW – HKT</div>
-            <div className='ticket__tdeck'>10:45 – 08:00</div>
-          </li>
-          <li className="ticket__lenght">
-            <div className='ticket__thead'>{'В пути'.toLocaleUpperCase()}</div>
-            <div className='ticket__tdeck'>21ч 15м</div>
-          </li>
-          <li className="ticket__stops">
-            <div className='ticket__thead'>{'2 пересадки'.toLocaleUpperCase()}</div>
-            <div className='ticket__tdeck'>HKG, JNB</div>
-          </li>
-        </ul>
-        <ul className='ticket__info ticket__info--back'>
-          <li className="ticket__route">
-            <div className='ticket__thead'>MOW – HKT</div>
-            <div className='ticket__tdeck'>10:45 – 08:00</div>
-          </li>
-          <li className="ticket__lenght">
-            <div className='ticket__thead'>{'В пути'.toLocaleUpperCase()}</div>
-            <div className='ticket__tdeck'>13ч 30м</div>
-          </li>
-          <li className="ticket__stops">
-            <div className='ticket__thead'>{'1 пересадка'.toLocaleUpperCase()}</div>
-            <div className='ticket__tdeck'>HKG</div>
-          </li>
-        </ul>
-      </section>
+      <section className={classes.ticket__body}>{ticketInfo}</section>
     </li>
   )
 }

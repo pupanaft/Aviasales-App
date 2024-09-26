@@ -1,19 +1,6 @@
+@use '../../var/var.scss';
+
 .ticket {
-    background-color: #fff;
-    padding: 14px;
-    height: 160px;
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-    }
-
-    &__price {
-        color: #339ff8;
-        font-size: 20px;
-    }
-
     &__info {
         padding: 0;
         list-style: none;
@@ -37,18 +24,6 @@
 
 @media(min-width: 650px) {
     .ticket {
-        padding: 20px;
-        height: 184px;
-
-        &__header {
-            margin-bottom: 20px;
-        }
-
-        &__price {
-            font-size: 24px;
-        }
-
-
         &__info {
             margin-bottom: 10px;
         }

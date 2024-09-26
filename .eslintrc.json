@@ -35,9 +35,20 @@
         "react-hooks"
     ],
     "rules": {
+        "no-bitwise": [
+            "error",
+            {
+                "allow": [
+                    "&"
+                ]
+            }
+        ],
         "indent": [
             "error",
-            2
+            2,
+            {
+                "SwitchCase": 1
+            }
         ],
         "import/no-extraneous-dependencies": [
             "error",
@@ -58,6 +69,15 @@
         "semi": [
             "error",
             "never"
+        ],
+        "no-param-reassign": [
+            "error",
+            {
+                "props": true,
+                "ignorePropertyModificationsFor": [
+                    "state"
+                ]
+            }
         ],
         "react/react-in-jsx-scope": "off",
         "react/prop-types": 0,
