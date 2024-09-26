@@ -1,1 +1,1 @@
-https://todo-r-ghfs.vercel.app/
+https://aviasales-app-ecru.vercel.app/
