@@ -59,7 +59,7 @@ export default function App() {
       <header className={clases.aviasales__header}>
         <img className={clases.aviasales__logo} src={logo} alt="aviasales_logo" />
       </header>
-      {!stop ? (
+      {!stoped ? (
         <div className={`${clases.aviasales__loader} ${clases.loader}`}>
           <div className={clases.loader__element} />
         </div>
