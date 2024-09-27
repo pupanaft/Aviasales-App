@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import classNames from 'classnames'
 
-import { addFlag, delFlag, allFlag } from '../../store/checkboxSlice'
+import { addFlag, delFlag, allFlag } from '../../store/aviasalesSlice'
 
 import clases from './drop-filter.module.scss'
 
-export default function DropFilter({ screenWidth, resetVisibleTickets }) {
+export default function DropFilter({ screenWidth }) {
   const [filterOpen, setFilterOpen] = useState(false)
   const dispatch = useDispatch()
-  const checkboxFlag = useSelector((state) => state.checkbox.checkboxFlag)
+  const checkboxFlag = useSelector((state) => state.aviasales.checkboxFlag)
 
   const allCheckboxClick = (e) => dispatch(allFlag(e.target.checked ? { flagId: 15 } : { flagId: 0 }))
 
@@ -34,10 +34,7 @@ export default function DropFilter({ screenWidth, resetVisibleTickets }) {
           id={filter.flag}
           className={clases['drop-filter__input']}
           checked={(checkboxFlag & filter.flag) !== 0}
-          onChange={(e) => {
-            resetVisibleTickets(0)
-            checkboxClick(e)
-          }}
+          onChange={(e) => checkboxClick(e)}
           type="checkbox"
         />
         <span className={clases['drop-filter__checkbox']} />
@@ -65,10 +62,7 @@ export default function DropFilter({ screenWidth, resetVisibleTickets }) {
               id="0"
               className={clases['drop-filter__input']}
               checked={checkboxFlag === 15}
-              onChange={(e) => {
-                resetVisibleTickets(0)
-                allCheckboxClick(e)
-              }}
+              onChange={(e) => allCheckboxClick(e)}
               type="checkbox"
             />
             <span className={clases['drop-filter__checkbox']} />

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 
-import { fetchTickets, setSerchId, arrayTickets } from '../../store/checkboxSlice'
+import { fetchTickets, setSerchId, arrayTickets, stop, loading, searchId } from '../../store/aviasalesSlice'
 import DropFilter from '../drop-filter'
 import Ticket from '../ticket'
 import Tabs from '../tabs'
@@ -10,9 +10,11 @@ import logo from '../../images/logo.png'
 import clases from './app.module.scss'
 
 export default function App() {
-  const [visibleTicketsId, setVisibleTicketsId] = useState(0)
+  const [visibleTicketsId, setVisibleTicketsId] = useState(5)
   const [width, setWidth] = useState(window.innerWidth)
-  const { stop, loading, searchId } = useSelector((state) => state.checkbox)
+  const stoped = useSelector(stop)
+  const load  = useSelector(loading)
+  const search  = useSelector(searchId)
   const sortedTickets = useSelector(arrayTickets)
 
   const dispatch = useDispatch()
@@ -34,10 +36,10 @@ export default function App() {
   }, [dispatch])
 
   useEffect(() => {
-    if (!stop && !loading) {
-      dispatch(fetchTickets(searchId))
+    if (!stoped && !load) {
+      dispatch(fetchTickets(search))
     }
-  }, [dispatch, stop, loading, searchId])
+  }, [dispatch, stoped, load, search])
 
   useEffect(() => {
     const handleResize = (event) => {
@@ -50,7 +52,7 @@ export default function App() {
   }, [])
 
   const ticketList = sortedTickets
-    .slice(visibleTicketsId, visibleTicketsId + 5)
+    .slice(0, visibleTicketsId)
     .map((info) => <Ticket item={info} key={`ticket-${Math.random(info.price)}`} />)
   return (
     <div className={clases.aviasales}>
@@ -63,10 +65,10 @@ export default function App() {
         </div>
       ) : null}
       <main className={`${clases.aviasales__content} ${clases.content}`}>
-        {width > 650 ? <DropFilter key="1" screenWidth={width} resetVisibleTickets={setVisibleTicketsId} /> : null}
+        {width > 650 ? <DropFilter key="1" screenWidth={width} /> : null}
         <section className={clases.content__wrapper}>
           <header className={`${clases['content__filter-menu']} ${clases['filter-menu']}`}>
-            {width < 650 ? <DropFilter key="2" width={width} resetVisibleTickets={setVisibleTicketsId} /> : null}
+            {width < 650 ? <DropFilter key="2" width={width} /> : null}
             <Tabs />
           </header>
           <ul className={`${clases['content__tickets-list']} ${clases['tickets-list']}`}>

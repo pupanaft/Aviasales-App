@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import checkboxReduser from './checkboxSlice'
+import aviasalesReduser from './aviasalesSlice'
 
 export default configureStore({
   reducer: {
-    checkbox: checkboxReduser,
+    aviasales: aviasalesReduser,
   },
 })

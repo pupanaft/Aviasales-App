@@ -1,23 +1,25 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 
-export const fetchTickets = createAsyncThunk('checkbox/fetchTickets', async (searchId, { rejectWithValue }) => {
+export const fetchTickets = createAsyncThunk('aviasales/fetchTickets', async (searchId, { rejectWithValue }) => {
   try {
     const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
+ 
     const data = await response.json()
+   
     return data
   } catch (error) {
-    return rejectWithValue(error.massage)
+    return rejectWithValue(error.message)
   }
 })
 
-const checkboxSlice = createSlice({
-  name: 'checkbox',
+const aviasalesSlice = createSlice({
+  name: 'aviasales',
   initialState: {
-    checkboxFlag: 0,
+    checkboxFlag: 15,
     activeTab: 'cheap',
     searchId: '',
     loading: null,
-    error: null,
+    error: [],
     tickets: [],
     stop: false,
   },
@@ -63,16 +65,20 @@ const checkboxSlice = createSlice({
     bilder
       .addCase(fetchTickets.pending, (state) => {
         state.loading = true
-        state.error = null
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
         state.loading = false
         state.tickets.push(...action.payload.tickets)
         state.stop = action.payload.stop
+        state.error = []
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.loading = false
-        state.error = action.payload
+        state.error.push(action.payload)
+        if(state.error.length>4){
+          state.stop = true
+          throw new Error('Failed to fetch')
+        }
       })
       .addMatcher(fetchTickets.settled, (state) => {
         switch (state.activeTab) {
@@ -98,11 +104,17 @@ const checkboxSlice = createSlice({
         }
       })
   },
+  selectors:{
+    allTickets: (state) => state.tickets,
+    flag:(state) => state.checkboxFlag,
+    tabs:(state) => state.activeTab,
+    stop:(state)=> state.stop,
+    loading:(state)=>state.loading,
+    searchId:(state)=>state.searchId
+  }
 })
 
-const allTickets = (state) => state.checkbox.tickets
-
-const flag = (state) => state.checkbox.checkboxFlag
+export const {allTickets, tabs, stop, loading, searchId, flag} = aviasalesSlice.selectors
 
 function flagGiver(maxStops) {
   switch (maxStops) {
@@ -128,7 +140,6 @@ export const arrayTickets = createSelector([allTickets, flag], (tickets, flags) 
     return (flags & flagTo) !== 0 && (flags & flagBack) !== 0
   })
 )
+export const { setTab, addFlag, delFlag, allFlag, setSerchId } = aviasalesSlice.actions
 
-export const { setTab, addFlag, delFlag, allFlag, setSerchId } = checkboxSlice.actions
-
-export default checkboxSlice.reducer
+export default aviasalesSlice.reducer

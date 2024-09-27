@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
 import classNames from 'classnames'
 
-import { setTab } from '../../store/checkboxSlice'
+import { setTab, tabs } from '../../store/aviasalesSlice'
 
 import classes from './tabs.module.scss'
 
-const tabs = [
+const tabsArr = [
   { name: 'САМЫЙ ДЕШЕВЫЙ', id: 'cheap' },
   { name: 'САМЫЙ БЫСТРЫЙ', id: 'fast' },
   { name: 'ОПТИМАЛЬНЫЙ', id: 'average' },
@@ -13,11 +13,11 @@ const tabs = [
 
 export default function Tabs() {
   const dispatch = useDispatch()
-  const activeTabs = useSelector((state) => state.checkbox.activeTab)
+  const activeTabs = useSelector(tabs)
 
   return (
     <ul className={`${classes['filter-menu__tabs']} ${classes.tabs}`}>
-      {tabs.map((tab) => {
+      {tabsArr.map((tab) => {
         const buttonClass = classNames({
           [classes.tabs__button]: true,
           [classes['tabs__button--active']]: tab.id === activeTabs,
