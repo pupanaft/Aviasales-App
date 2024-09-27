@@ -1,1 +1,1 @@
-https://aviasales-app-ecru.vercel.app/
+https://aviasales-app-sigma-eight.vercel.app/
